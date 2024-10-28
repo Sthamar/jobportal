@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{%static 'app/css/login.css'%}" rel="stylesheet">
+    <link href="{%static 'app/css/bootstrap.min.css'%}" rel="stylesheet">
+    <link href="{%static 'app/css/style.css'%}" rel="stylesheet">
+        <title>Login</title>
+    </head>
+    <body style="background-color:#73EC8B; color:black;">
+        
+        <div class="form-container">
+            <h1 class="m-0 text-primary">kaam chaiyo</h1>
+            {{msg}}
+            <h1>Login</h1>
+            <form method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+
+                <button class="submit" type='submit'>Login</button>
+                {% if form.errors %}
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            {% for field in form %}
+                                                {% for error in field.errors %}
+                                                    <li>{{ field.label }}: {{ error }}</li>
+                                                {% endfor %}
+                                            {% endfor %}
+                                            {% for error in form.non_field_errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %} 
+                                        </ul>
+                                    </div>
+                                {% endif %}
+            </form>
+            <div class="text">
+                <p>Don't have an account? <a href="{% url "register" %}">Register Now</a></p>
+            </div>
+        </div>
+    </body>
+</html>

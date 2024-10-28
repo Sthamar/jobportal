@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Applicant | Detail{% endblock title %}
+
+{% block content %}
+        <!-- Header End -->
+        <div class="container-xxl py-5 bg-dark page-header mb-5">
+            <div class="container my-5 pt-5 pb-4">
+                <h1 class="display-3 text-white mb-3 animated slideInDown">Applicant Detail</h1>
+            </div>
+        </div>
+        <!-- Header End -->
+
+
+        <!-- Job Detail Start -->
+        <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+            <div class="container">
+                <div class="row gy-5 gx-4">
+                    <div class="col-lg-8">
+                        <div class="d-flex align-items-center mb-5">
+                            {% comment %} <img class="flex-shrink-0 img-fluid border rounded" src="img/com-logo-2.jpg" alt="" style="width: 80px; height: 80px;"> {% endcomment %}
+                            <div class="text-start ps-4">
+                                <h3 class="mb-3">{{applicant.full_name}}</h3>
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <h4 class="mb-3">Applied for</h4>
+                            <p>{{applicant.job_post}}</p>
+                            <div class="column xl-6 md-12 contact-cta">     
+                                <a href="https://mail.google.com/mail/?view=cm&to={{applicant.email}}" class="btn btn--primary u-fullwidth contact-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M20 4H4c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2zm0 2v.511l-8 6.223-8-6.222V6h16zM4 18V9.044l7.386 5.745a.994.994 0 0 0 1.228 0L20 9.044 20.002 18H4z"></path></svg>
+                                    Send {{full_name}} An Email
+                                </a>
+                            </div> 
+                            <div class="d-flex mb-3">
+                                <a class="btn btn-primary" href="{{applicant.cv.url}}">View CV</a>
+                            </div>
+                            <div class="d-flex mb-3">
+                                <a class="btn btn-primary" href="{{applicant.portfolio_link}}">View Portfolio</a>
+                            </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- Job Detail End -->
+
+{% endblock content %}
+{% load static %}
+
