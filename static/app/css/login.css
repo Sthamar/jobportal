@@ -33,7 +33,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
-   
+
 }
 
 .form-container .text{
@@ -106,6 +106,6 @@ body{
     color: var(--dark);
     list-style: none;
     font-size: 12px;
-    
+
 }
 
