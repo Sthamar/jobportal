@@ -2,15 +2,15 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
 from app.forms import JobSearchForm, ApplicantForm
 from app.models import JobPost, Applicant
+from datetime import datetime
 
 # Create your views here.
 
 
 #homepage view
 def home(request):
-    job_post = JobPost.objects.all()
+    job_post = JobPost.objects.all().order_by('-date')
     search = JobSearchForm(request.GET or None)
-    
     full_time = job_post.filter(type='Full Time')
     part_time = job_post.filter(type='Part Time')
     intern = job_post.filter(type='Intern')
@@ -23,7 +23,7 @@ def home(request):
         
     
           
-    context = {"job_post":job_post, "full_time":full_time, "part_time":part_time,"intern": intern, 'search':search,}
+    context = {"job_post":job_post, "full_time":full_time, "part_time":part_time,"intern": intern, 'search':search}
     return render(request, 'app/home.html',context)
 
 
@@ -65,7 +65,6 @@ def search_list(request):
 def detail_page(request, slug):
     job = get_object_or_404(JobPost, slug=slug)
     already_applied =  Applicant.objects.filter(user = request.user, job_post = job).exists()
-    tkm = "Thank you for applying"
     form = ApplicantForm(request.POST, request.FILES)
     context = {"job": job, "form": form,'success': True, 'applied':already_applied }
     if already_applied:
