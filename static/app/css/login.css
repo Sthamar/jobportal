@@ -24,7 +24,7 @@ body{
 }
 
 .form-container{
-    background-color: var(--secondary);
+    background-color: var(--light);
     padding: 40px;
     border-radius: 2%;
 }
@@ -72,7 +72,7 @@ body{
 .form-container p input{
     background-color: transparent;
     border: 0;
-    border-bottom: 2px var(--light) solid ;
+    border-bottom: 2px var(--dark) solid ;
     display: block;
     width: 100%;
     padding: 10px;

@@ -9,29 +9,32 @@ from employer.models import Employer
     
     
 def index(request):
-    if Employer.objects.filter(user=request.user).exists():
-        employer = Employer.objects.get(user=request.user)
-        job = JobPost.objects.filter(user=employer)
+    if request.user.is_authenticated:
+        if Employer.objects.filter(user=request.user).exists():
+            employer = Employer.objects.get(user=request.user)
+            job = JobPost.objects.filter(user=employer)
 
-        search = JobSearchForm(request.GET or None)
-        
-        
-        full_time = job.filter(type='Full Time')
-        part_time = job.filter(type='Part Time')
-        intern = job.filter(type='Intern')
-        
-        
-        if request.method == "GET" and search.is_valid():
-            return redirect('search', keyword=search.cleaned_data['keyword'], 
-                            category=search.cleaned_data['category'], 
-                            location=search.cleaned_data['location'])
+            search = JobSearchForm(request.GET or None)
             
-        
             
-        context = {"job_post":job, "full_time":full_time, "part_time":part_time,"intern": intern, 'search':search,}
-        return render(request, 'employer/index.html',context)
+            full_time = job.filter(type='Full Time')
+            part_time = job.filter(type='Part Time')
+            intern = job.filter(type='Intern')
+            
+            
+            if request.method == "GET" and search.is_valid():
+                return redirect('search', keyword=search.cleaned_data['keyword'], 
+                                category=search.cleaned_data['category'], 
+                                location=search.cleaned_data['location'])
+                
+            
+                
+            context = {"job_post":job, "full_time":full_time, "part_time":part_time,"intern": intern, 'search':search,}
+            return render(request, 'employer/index.html',context)
+        else:
+            return render(request, 'employer/index.html',{'msg':'no jobs'})
     else:
-        return render(request, 'employer/index.html',{'msg':'no jobs'})
+        return redirect('home')
 
 
 def search_list(request):
