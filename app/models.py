@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.utils.text import slugify
 from employer.models import Employer
+from datetime import datetime
 
 User = settings.AUTH_USER_MODEL
 # Create your models here.
@@ -55,6 +56,10 @@ class JobPost(models.Model):
               
     def __str__(self):
         return f"{self.title} with salary ${self.salary}"
+    
+    @property
+    def is_expired(self):
+        return datetime.now().date() >= self.expiry
     
     
 

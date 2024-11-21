@@ -4,13 +4,6 @@ from employer.models import Employer
 
 
 class CreateJob(forms.ModelForm):
-    company_name = forms.CharField(
-        max_length=200,
-        widget=forms.TextInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Company Name'
-        })
-    )
     email = forms.EmailField(
         widget=forms.EmailInput(attrs={
             'class': 'form-control',
@@ -35,7 +28,7 @@ class CreateJob(forms.ModelForm):
 
     class Meta:
         model = JobPost
-        fields = ['title', 'description', 'responsibility', 'qualification', 'expiry', 'vacancy', 'salary', 'location', 'type']
+        fields = ['title', 'description', 'responsibility', 'qualification', 'expiry', 'vacancy', 'salary', 'location', 'type', 'company']
         widgets = {
             'title': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -75,6 +68,10 @@ class CreateJob(forms.ModelForm):
             'type': forms.Select(attrs={
                 'class': 'form-control',
                 'placeholder': 'Job Type'
+            }),
+            'company': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Company Name'
             }),
         }
 
