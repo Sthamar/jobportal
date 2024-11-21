@@ -84,7 +84,6 @@ class CreateJob(forms.ModelForm):
         if self.user:
             employer = Employer.objects.filter(user=self.user).first()
             if employer:
-                self.fields['company_name'].initial = employer.company_name
                 self.fields['email'].initial = employer.email
                 self.fields['website'].initial = employer.website
                 self.fields['contact_number'].initial = employer.contact_number
@@ -92,7 +91,6 @@ class CreateJob(forms.ModelForm):
     def save(self, user, *args, **kwargs):
         # Create or update Employer instance
         employer_data = {
-            'company_name': self.cleaned_data['company_name'],
             'email': self.cleaned_data['email'],
             'website': self.cleaned_data.get('website'),
             'contact_number': self.cleaned_data.get('contact_number')

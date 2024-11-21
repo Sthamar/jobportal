@@ -58,10 +58,12 @@ def login_view(request):
 def logoutuser(request):
     try:
         if request.method == 'POST':
-            logout(request)
-            return redirect('register')
+            logout(request)  
+            return redirect('register')  
+        else:
+            return HttpResponse('Invalid request method', status=405) 
     except Exception as e:
-        return HttpResponse(f'An error occurred while logging out: {str(e)}')
+        return HttpResponse(f'An error occurred while logging out: {str(e)}', status=500)
 
 
             

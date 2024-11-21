@@ -76,7 +76,6 @@ def create_job(request):
     if request.method == 'POST':
         if form.is_valid():
            if form.is_valid():
-            # Pass the current logged-in user to the save method
             form.save(user=request.user)
             return redirect('thank')
         else:

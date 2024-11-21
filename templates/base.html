@@ -70,7 +70,7 @@
                     <a href="{% url "about" %}" class="nav-item nav-link">About</a>
                     <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
                     {% if user.is_authenticated %}
-                    <form action='{% url "login_view" %}' method="POST">
+                    <form action='{% url "logoutuser" %}' method="POST">
                         {% csrf_token %}
                         <button type="submit" id="logout" class='nav-item nav-link' style="border:0px; background-color: transparent;">Logout</button>
                     </form>
