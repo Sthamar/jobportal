@@ -59,7 +59,7 @@ def logoutuser(request):
     try:
         if request.method == 'POST':
             logout(request)  
-            return redirect('register')  
+            return redirect('home')  
         else:
             return HttpResponse('Invalid request method', status=405) 
     except Exception as e:
