@@ -6,46 +6,6 @@
 
 {% block content %}
 
-   <!-- Search Start -->
-    <form method="GET" action="{% url "search" %}">
-         <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
-            <div class="container">
-                <div class="row g-2">
-                    <div class="col-md-10">
-                        <div class="row g-2">
-                            <div class="col-md-4">
-                                {{search.keyword}}
-                            </div>
-                            <div class="col-md-4">
-                                {{search.category}}
-                            </div>
-                            <div class="col-md-4">
-                               {{search.location}}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-dark border-0 w-100">Search</button>
-                    </div>
-                    {% if search.errors %}
-                        <div class="alert alert-danger">
-                                <ul>
-                                    {% for field in search %}
-                                        {% for error in field.errors %}
-                                            <li>{{ field.label }}: {{ error }}</li>
-                                        {% endfor %}
-                                    {% endfor %}
-                                    {% for error in form.non_field_errors %}
-                                        <li>{{ error }}</li>
-                                    {% endfor %} 
-                                </ul>
-                            </div>
-                        {% endif %}
-                </div>
-            </div>
-        </div>
-    </form>
-        <!-- Search End -->
 
         <!-- Jobs Start -->
         <div class="container-xxl py-5">

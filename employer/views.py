@@ -14,22 +14,11 @@ def index(request):
             employer = Employer.objects.get(user=request.user)
             job = JobPost.objects.filter(user=employer)
 
-            search = JobSearchForm(request.GET or None)
-            
-            
             full_time = job.filter(type='Full Time')
             part_time = job.filter(type='Part Time')
             intern = job.filter(type='Intern')
-            
-            
-            if request.method == "GET" and search.is_valid():
-                return redirect('search', keyword=search.cleaned_data['keyword'], 
-                                category=search.cleaned_data['category'], 
-                                location=search.cleaned_data['location'])
                 
-            
-                
-            context = {"job_post":job, "full_time":full_time, "part_time":part_time,"intern": intern, 'search':search,}
+            context = {"job_post":job, "full_time":full_time, "part_time":part_time,"intern": intern,}
             return render(request, 'employer/index.html',context)
         else:
             return render(request, 'employer/index.html',{'msg':'no jobs'})
@@ -37,39 +26,6 @@ def index(request):
         return redirect('home')
 
 
-def search_list(request):
-    matched_jobs = JobPost.objects.all()
-    keyword = request.GET.get('keyword')
-    category = request.GET.get('category')
-    location = request.GET.get('location')
-    print(keyword)
-    form = JobSearchForm(request.GET or None)  
-        
-    if keyword:
-            matched_jobs = matched_jobs.filter(
-                Q(title__icontains = keyword) | Q(description__icontains = keyword)
-            )
-         
-    if category:
-        matched_jobs = matched_jobs.filter(
-            type = category
-        )
-        
-            
-    if location:
-        matched_jobs = matched_jobs.filter(
-                Q(location__city__icontains=location) |
-                Q(location__province__icontains=location) |
-                Q(location__country__icontains=location)
-            )
-        
-    context = {
-        'form': form,
-        'matched_jobs': matched_jobs,
-        'search': form  # Using the same form object
-    }
-    
-    return render(request, 'employer/search_list.html', context)
 
 
 def create_job(request):

@@ -19,7 +19,7 @@ class ApplicantForm(forms.ModelForm):
                 'placeholder': 'Portfolio Website'
             }),
             'cv': forms.ClearableFileInput(attrs={
-                'class': 'form-control bg-white'
+                'class': 'form-control bg-white',
             }),  
         }
         

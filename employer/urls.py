@@ -2,7 +2,6 @@ from django.urls import path
 from employer import views
 urlpatterns = [
     path('', views.index, name='index'),
-    path('search', views.search_list, name='search'),
     path('create', views.create_job, name='create'),
     path('create/thankyou', views.thank, name='thank'),
     path('edit/<slug:slug>', views.edit_page, name='edit_page'),

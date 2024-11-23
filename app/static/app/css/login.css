@@ -1,17 +1,17 @@
-:root{
+:root {
     --button-color: #00FF9C;
-    --secondary-color:#D2FF72;
-    --main-color:#73EC8B;
+    --secondary-color: #D2FF72;
+    --main-color: #73EC8B;
     --primary: #00B074;
     --light: #EFFDF5;
     --dark: #2B3940;
 }
 
-*{
+* {
     box-sizing: border-box;
 }
 
-body{
+body {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     background-color: var(--primary);
     display: flex;
@@ -19,31 +19,48 @@ body{
     align-items: center;
     height: 100vh;
     margin: 0;
-
 }
 
-.form-container{
+.form-container {
     background-color: var(--light);
     padding: 40px;
     border-radius: 2%;
+    width: 100%;
+    max-width: 400px;
+    margin-top: 20px;
 }
 
-.form-container h1{
+
+
+.form-container h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-   
+    margin-bottom: 20px;
+    font-size: 24px;
 }
 
-.form-container .text{
+.form-container .text {
     margin-top: 30px;
 }
 
-.form-container .text a{
+.form-container .text a {
     text-decoration: none;
+    color: var(--primary);
+    font-size: 14px;
 }
 
-.form-container .submit{
+.form-container .radio-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px; 
+}
+
+.form-container .radio-group input {
+    margin-right: 8px;
+}
+
+.form-container .submit {
     cursor: pointer;
     display: inline-block;
     width: 100%;
@@ -52,43 +69,49 @@ body{
     padding: 15px;
     border: 0;
     border-radius: 8%;
+    transition: background-color 0.3s ease, transform 0.1s ease;
 }
 
-.form-container .submit:focus{
+.form-container .submit:focus {
     outline: none;
 }
 
-.form-container .submit:active{
+.form-container .submit:active {
     transform: scale(0.98);
 }
 
-.form-container p{
-    position: relative;
-    margin: 20px 0 20px;
-    width: 300px;
+.form-container .submit:hover {
+    background-color: var(--secondary-color);
 }
 
-.form-container p input{
+.form-container p {
+    position: relative;
+    margin: 20px 0;
+    width: 100%;
+}
+
+.form-container p input {
     background-color: transparent;
     border: 0;
-    border-bottom: 2px var(--dark) solid ;
+    border-bottom: 2px var(--dark) solid;
     display: block;
     width: 100%;
     padding: 10px;
     font-size: 14px;
     color: var(--dark);
     font-family: inherit;
+    transition: border-color 0.3s ease;
 }
 
-
-.form-container p input:focus{
+.form-container p input:focus {
     outline: none;
+    border-color: var(--button-color);
 }
 
-.form-container  ul{
+.form-container ul {
     display: flex;
     flex-direction: column;
-    align-items: left;
+    align-items: flex-start;
     justify-content: center;
     padding: 0;
     width: 100%;
@@ -96,15 +119,13 @@ body{
     list-style: none;
 }
 
-.form-container  ul li{
+.form-container ul li {
     font-size: 12px;
 }
 
-.helptext{
+.helptext {
     width: 100%;
     color: var(--dark);
     list-style: none;
     font-size: 12px;
-    
 }
-

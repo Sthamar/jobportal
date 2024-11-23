@@ -28,7 +28,7 @@ def home(request):
 
 
 def search_list(request):
-    matched_jobs = JobPost.objects.all()
+    matched_jobs = JobPost.objects.filter(expiry__gte = datetime.now().date())
     keyword = request.GET.get('keyword')
     category = request.GET.get('category')
     location = request.GET.get('location')
@@ -63,24 +63,27 @@ def search_list(request):
 
 
 def detail_page(request, slug):
-    job = get_object_or_404(JobPost, slug=slug)
-    already_applied =  Applicant.objects.filter(user = request.user, job_post = job).exists()
-    form = ApplicantForm(request.POST, request.FILES)
-    context = {"job": job, "form": form,'success': True, 'applied':already_applied }
-    if already_applied:
-        return render(request, 'app/details.html', context)
-    elif request.method == 'POST':
-        if form.is_valid():
-            newapplicant = form.save(commit=False)
-            newapplicant.user = request.user 
-            newapplicant.job_post = job
-            newapplicant.save()
-            return redirect('detail_page', slug = slug)
+    try:
+        job = get_object_or_404(JobPost, slug=slug)
+        already_applied =  Applicant.objects.filter(user = request.user, job_post = job).exists()
+        form = ApplicantForm(request.POST, request.FILES)
+        context = {"job": job, "form": form,'success': True, 'applied':already_applied }
+        if already_applied:
+            return render(request, 'app/details.html', context)
+        elif request.method == 'POST':
+            if form.is_valid():
+                newapplicant = form.save(commit=False)
+                newapplicant.user = request.user 
+                newapplicant.job_post = job
+                newapplicant.save()
+                return redirect('detail_page', slug = slug)
+            else:
+                print("Form errors:", form.errors)  # This will show which field is causing issues
+                print("CV field errors:", form.errors.get('cv'))
         else:
-            print("Form errors:", form.errors)  # This will show which field is causing issues
-            print("CV field errors:", form.errors.get('cv'))
-    else:
-        form = ApplicantForm()  # Create a new form instance for GET requests
+            form = ApplicantForm()  # Create a new form instance for GET requests
+    except:
+        return redirect('login_view')
 
     context = {"job": job, "form": form}
     return render(request, 'app/details.html', context)

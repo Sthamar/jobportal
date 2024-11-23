@@ -55,7 +55,7 @@ class JobPost(models.Model):
     
     @property
     def is_expired(self):
-        return datetime.now().date() >= self.expiry
+        return datetime.now().date() > self.expiry
     
     
 

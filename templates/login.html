@@ -13,15 +13,22 @@
         
         <div class="form-container">
             <h1 class="m-0 text-primary">kaam chaiyo</h1>
-            {{msg}}
             <h1>Login</h1>
             <form method="POST">
                 {% csrf_token %}
                 {{form.as_p}}
 
                 <button class="submit" type='submit'>Login</button>
+                {% if msg != "" %}
+                <div class="alert alert-danger">
+                    {{msg}}
+                </div>
+                {% else %}
+                    {{msg}}
+                {% endif %}
                 {% if form.errors %}
                                     <div class="alert alert-danger">
+                                        {{msg}}
                                         <ul>
                                             {% for field in form %}
                                                 {% for error in field.errors %}
