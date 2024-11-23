@@ -17,6 +17,14 @@
             {% csrf_token %}
             {{form.as_p}}
             <button class="submit" type='submit'>Submit</button>
+            {% if msg != '' %}
+            <div class="alert alert-danger">
+                {{msg}}
+            </div>
+            {% else %}
+                {{msg}}
+            {% endif %}
+            
             {% if form.errors %}
                                     <div class="alert alert-danger">
                                         <ul>

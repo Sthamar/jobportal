@@ -73,17 +73,21 @@ def search_list(request):
 
 
 def create_job(request):
-    form = CreateJob(request.POST)
-    employer = Employer(request.POST)
-    
+    msg = ''
     if request.method == 'POST':
-        if form.is_valid():
-           if form.is_valid():
-            form.save(user=request.user)
-            return redirect('thank')
-        else:
-            form = CreateJob()
-    context = {'form': form}
+        form = CreateJob(request.POST, user=request.user)
+        try:
+            if form.is_valid():
+                form.save(user=request.user)
+                return redirect('thank') 
+            else:
+                msg = "There were errors in the form. Please fix them and try again."
+        except Exception as e:
+            msg = f"Error creating job post: {str(e)}"
+    else:
+        form = CreateJob() 
+
+    context = {'form': form, 'msg': msg}
     return render(request, 'employer/create_job.html', context)
 
 

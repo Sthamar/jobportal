@@ -6,19 +6,28 @@ from django.contrib.auth import authenticate, login, logout
 # Create your views here.
 
 def register(request):
-    msg = None
+    msg = ''
     try:    
         if request.method == "POST":
             form = SignupForm(request.POST)
+            
             if form.is_valid():
-                try:
-                    user = form.save()
-                    msg = 'user created'
-                    return redirect('login_view')
-                except Exception as e:
-                    msg=f'Error creating user: {str(e)}'
+                applicant = request.POST.get("is_applicant")
+                employer = request.POST.get("is_employer")
+                print(f'applicant: {applicant} employer: {employer}')
+                if applicant == 'on' and employer == "on":
+                    msg = 'select only one role'
+                elif applicant == None and employer == None:
+                    msg = 'select altest one role'
+                else:
+                    try:
+                        user = form.save()
+                        msg = 'user created'
+                        return redirect('login_view')
+                    except Exception as e:
+                        msg=f'Error creating user: {str(e)}'
             else:
-                msg = 'username or password is incorrect'
+                msg = ''
         else:
             form = SignupForm()
     except Exception as e:

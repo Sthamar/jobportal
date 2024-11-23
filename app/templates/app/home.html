@@ -85,13 +85,19 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
-                                        <div class="d-flex mb-3">
-                                            <a class="btn btn-primary" href="{% url "detail_page" job.slug %}">Apply Now</a>
-                                        </div>
                                         {% if job.is_expired %}
-                                        <small class="text-truncate" style="color:red"><i class="far fa-calendar-alt text-primary me-2"></i>Expired</small>
+                                            <small class="text-truncate" style="color:red"><i class="far fa-calendar-alt text-primary me-2"></i>Expired</small>
                                         {% else %}
-                                        <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>{{job.expiry}}</small>
+                                            {% if user.is_authenticated %}
+                                                <div class="d-flex mb-3">
+                                                    <a class="btn btn-primary" href="{% url "detail_page" job.slug %}">Apply Now</a>
+                                                </div>
+                                            {% else %}
+                                                <div class="d-flex mb-3">
+                                                    <a class="btn btn-primary" href="{% url "login_view" %}">Apply Now</a>
+                                                </div>
+                                            {% endif %}
+                                            <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>{{job.expiry}}</small>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -114,14 +120,20 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
-                                        <div class="d-flex mb-3">
-                                            <a class="btn btn-primary" href="{% url "detail_page" job.slug %}">Apply Now</a>
-                                        </div>
                                         {% if job.is_expired %}
-                                        <small class="text-truncate" style="color:red"><i class="far fa-calendar-alt text-primary me-2"></i>Expired</small>
+                                            <small class="text-truncate" style="color:red"><i class="far fa-calendar-alt text-primary me-2"></i>Expired</small>
                                         {% else %}
-                                        <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>{{job.expiry}}</small>
-                                        {% endif %}
+                                            {% if user.is_authenticated %}
+                                                <div class="d-flex mb-3">
+                                                    <a class="btn btn-primary" href="{% url "detail_page" job.slug %}">Apply Now</a>
+                                                </div>
+                                            {% else %}
+                                                <div class="d-flex mb-3">
+                                                    <a class="btn btn-primary" href="{% url "login_view" %}">Apply Now</a>
+                                                </div>
+                                            {% endif %}
+                                            <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>{{job.expiry}}</small>
+                                    {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -142,13 +154,19 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
-                                        <div class="d-flex mb-3">
-                                            <a class="btn btn-primary" href="{% url "detail_page" job.slug %}">Apply Now</a>
-                                        </div>
                                         {% if job.is_expired %}
-                                        <small class="text-truncate" style="color:red"><i class="far fa-calendar-alt text-primary me-2"></i>Expired</small>
+                                            <small class="text-truncate" style="color:red"><i class="far fa-calendar-alt text-primary me-2"></i>Expired</small>
                                         {% else %}
-                                        <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>{{job.expiry}}</small>
+                                            {% if user.is_authenticated %}
+                                                <div class="d-flex mb-3">
+                                                    <a class="btn btn-primary" href="{% url "detail_page" job.slug %}">Apply Now</a>
+                                                </div>
+                                            {% else %}
+                                                <div class="d-flex mb-3">
+                                                    <a class="btn btn-primary" href="{% url "login_view" %}">Apply Now</a>
+                                                </div>
+                                            {% endif %}
+                                            <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>{{job.expiry}}</small>
                                         {% endif %}
                                     </div>
                                 </div>

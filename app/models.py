@@ -3,6 +3,7 @@ from django.conf import settings
 from django.utils.text import slugify
 from employer.models import Employer
 from datetime import datetime
+from django.core.validators import FileExtensionValidator
 
 User = settings.AUTH_USER_MODEL
 # Create your models here.
@@ -38,18 +39,13 @@ class JobPost(models.Model):
     
     def save(self, *args, **kwargs):
         if not self.slug:
-            # Generate an initial slug from the title
             base_slug = slugify(self.title)[:40]
             slug = base_slug
             counter = 1
 
-            # Check if the generated slug already exists in the database
             while JobPost.objects.filter(slug=slug).exists():
-                # If it exists, add a counter to create a unique slug
                 slug = f"{base_slug}-{counter}"
                 counter += 1
-
-            # Assign the final unique slug to the instance
             self.slug = slug
 
         super().save(*args, **kwargs)
@@ -69,7 +65,7 @@ class Applicant(models.Model):
     full_name = models.CharField(max_length=200)
     email = models.EmailField(max_length=250)
     portfolio_link = models.URLField(null=True, blank=True)
-    cv = models.FileField(upload_to='documents/', max_length=100)
+    cv = models.FileField(upload_to='documents/', max_length=100,validators=[FileExtensionValidator(allowed_extensions=['pdf', 'doc', 'docx'])])
     
     def __str__(self):
         return self.full_name

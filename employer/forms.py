@@ -1,6 +1,8 @@
 from django import forms
 from app.models import JobPost
 from employer.models import Employer
+from django.core.exceptions import ValidationError
+from django.utils.timezone import now
 
 
 class CreateJob(forms.ModelForm):
@@ -87,6 +89,15 @@ class CreateJob(forms.ModelForm):
                 self.fields['email'].initial = employer.email
                 self.fields['website'].initial = employer.website
                 self.fields['contact_number'].initial = employer.contact_number
+
+    def clean_expiry(self):
+        expiry_date = self.cleaned_data.get('expiry')
+        today = now().date()
+
+        if expiry_date <= today:
+            raise ValidationError("The expiry date must be a future date.")
+
+        return expiry_date
 
     def save(self, user, *args, **kwargs):
         # Create or update Employer instance

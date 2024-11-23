@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from account.models import User
+from django.core.exceptions import ValidationError
 
 class LoginForm(forms.Form):
     username = forms.CharField(
@@ -31,14 +32,6 @@ class SignupForm(UserCreationForm):
         )
     )
     
-    email = forms.CharField(
-        widget= forms.EmailInput(
-            attrs={
-                'class':'form-control',
-                
-            }
-        )
-    )
     
     password1 = forms.CharField(
         label= 'Enter Password',
@@ -66,4 +59,11 @@ class SignupForm(UserCreationForm):
     
     class Meta:
         model = User
-        fields = ('username', 'email', 'is_admin', 'is_applicant','is_employer')
+        fields = ('username', 'is_applicant','is_employer')
+        
+        
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if username.isdigit():
+            raise ValidationError("The username cannot consist of numbers only.")
+        return username
