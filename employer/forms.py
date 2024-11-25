@@ -30,7 +30,7 @@ class CreateJob(forms.ModelForm):
 
     class Meta:
         model = JobPost
-        fields = ['title', 'description', 'responsibility', 'qualification', 'expiry', 'vacancy', 'salary', 'location', 'type', 'company']
+        fields = ['title', 'description', 'responsibility', 'qualification', 'expiry', 'vacancy', 'salary', 'location', 'type', 'company','skills']
         widgets = {
             'title': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -74,6 +74,10 @@ class CreateJob(forms.ModelForm):
             'company': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Company Name'
+            }),
+            'skills': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'skills requied separate by comma'
             }),
         }
 

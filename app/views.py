@@ -23,7 +23,7 @@ def home(request):
         
     
           
-    context = {"job_post":job_post, "full_time":full_time, "part_time":part_time,"intern": intern, 'search':search}
+    context = {"job_post":job_post, "full_time":full_time, "part_time":part_time,"intern": intern, 'search':search, "user": request.user}
     return render(request, 'app/home.html',context)
 
 
@@ -62,12 +62,51 @@ def search_list(request):
     return render(request, 'app/search_list.html', context)
 
 
+
+def recommend_jobs(applicant_skills):
+    if not applicant_skills:
+        return [] 
+    
+    job_posts = JobPost.objects.all()
+    recommended_jobs = []
+
+    
+    applicant_skills_set = set(skill.lower() for skill in applicant_skills.split(","))
+
+    for job in job_posts:
+        if job.skills:
+            job_skills = job.skills.split(",")
+            job_skills_set = set(skill.lower() for skill in job_skills)
+        
+            match_score = len(applicant_skills_set.intersection(job_skills_set))
+
+            if match_score > 0:
+                recommended_jobs.append((job, match_score))
+                
+    print('hello')
+    
+    # Sort jobs by the match score in descending order
+    recommended_jobs.sort(key=lambda x: x[1], reverse=True)
+    print(recommended_jobs)
+    
+    return recommended_jobs
+
+
 def detail_page(request, slug):
     try:
         job = get_object_or_404(JobPost, slug=slug)
         already_applied =  Applicant.objects.filter(user = request.user, job_post = job).exists()
         form = ApplicantForm(request.POST, request.FILES)
-        context = {"job": job, "form": form,'success': True, 'applied':already_applied }
+        applicant = Applicant.objects.filter(user=request.user, job_post =job).first()
+            
+        if applicant:
+            applicant_skills = applicant.skills
+        else:
+            applicant_skills = ''
+            
+        recommended_jobs = recommend_jobs(applicant_skills)
+        
+        context = {"job": job, "form": form,'success': True, 'applied':already_applied, 'recommended_jobs':recommended_jobs }
         if already_applied:
             return render(request, 'app/details.html', context)
         elif request.method == 'POST':
@@ -78,11 +117,13 @@ def detail_page(request, slug):
                 newapplicant.save()
                 return redirect('detail_page', slug = slug)
             else:
-                print("Form errors:", form.errors)  # This will show which field is causing issues
+                print("Form errors:", form.errors)  
                 print("CV field errors:", form.errors.get('cv'))
         else:
-            form = ApplicantForm()  # Create a new form instance for GET requests
-    except:
+            form = ApplicantForm()  
+    except Exception as e:
+        # If there’s an error, redirect to login page
+        print(f"Error: {e}")
         return redirect('login_view')
 
     context = {"job": job, "form": form}

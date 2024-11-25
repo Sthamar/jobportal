@@ -31,6 +31,7 @@
                             <p>{{job.description}}</p>
                             <h4 class="mb-3">Responsibility</h4>
                             <p>{{job.responsibility}}</p>
+                            
                             {% comment %} <ul class="list-unstyled">
                                 <li><i class="fa fa-angle-right text-primary me-2"></i>Dolor justo tempor duo ipsum accusam</li>
                                 <li><i class="fa fa-angle-right text-primary me-2"></i>Elitr stet dolor vero clita labore gubergren</li>
@@ -40,6 +41,9 @@
                             </ul> {% endcomment %}
                             <h4 class="mb-3">Qualifications</h4>
                             <p>{{job.qualification}}</p>
+                            <h4 class="mb-3">Skills Required</h4>
+                            <p>{{job.skills}}</p>
+
                             {% comment %} <ul class="list-unstyled">
                                 <li><i class="fa fa-angle-right text-primary me-2"></i>Dolor justo tempor duo ipsum accusam</li>
                                 <li><i class="fa fa-angle-right text-primary me-2"></i>Elitr stet dolor vero clita labore gubergren</li>
@@ -66,6 +70,9 @@
                                     </div>
                                     <div class="col-12 col-sm-6">
                                         {{form.portfolio_link}}
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        {{form.skills}}
                                     </div>
                                     <div class="col-12 col-sm-6">
                                         {{form.cv}}
@@ -114,10 +121,18 @@
                             {% endif %}
 
                         </div>
-                        {% comment %} <div class="bg-light rounded p-5 wow slideInUp" data-wow-delay="0.1s">
-                            <h4 class="mb-4">Company Detail</h4>
-                            <p class="m-0">{{job.company}}</p>
-                        </div> {% endcomment %}
+                        {% if recommended_jobs %}
+                            <h3>Recommended Jobs for You</h3>
+                            <ul>
+                                {% for job, score in recommended_jobs %}
+                                    <li>
+                                        <a href="{% url 'detail_page' slug=job.slug %}">{{ job.title }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>No recommended jobs based on your skills.</p>
+                        {% endif %}
                     </div>
                 </div>
             </div>

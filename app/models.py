@@ -36,6 +36,7 @@ class JobPost(models.Model):
     type = models.CharField(max_length=200, null=False, choices=JOB_TYPE_CHOICES)
     company = models.CharField(max_length= 200,null=True)
     user = models.ForeignKey(Employer, on_delete=models.CASCADE, blank=True, null=True)
+    skills = skills = models.TextField('Required Skills', blank=True, null=True)
     
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -66,6 +67,7 @@ class Applicant(models.Model):
     email = models.EmailField(max_length=250)
     portfolio_link = models.URLField(null=True, blank=True)
     cv = models.FileField(upload_to='documents/', max_length=100,validators=[FileExtensionValidator(allowed_extensions=['pdf', 'doc', 'docx'])])
+    skills = models.TextField(blank=True)
     
     def __str__(self):
         return self.full_name

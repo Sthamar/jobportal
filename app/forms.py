@@ -4,7 +4,7 @@ from app.models import Applicant, JobPost
 class ApplicantForm(forms.ModelForm):
     class Meta:
         model = Applicant
-        fields = ['full_name','email','portfolio_link', 'cv']
+        fields = ['full_name','email','portfolio_link', 'cv', 'skills']
         widgets = {
             'full_name': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -20,7 +20,11 @@ class ApplicantForm(forms.ModelForm):
             }),
             'cv': forms.ClearableFileInput(attrs={
                 'class': 'form-control bg-white',
-            }),  
+            }),
+            'skills': forms.TextInput(attrs={
+            'class':'form-control',
+            'placeholder':'Enter skills (comma-separated)'
+        })
         }
         
         

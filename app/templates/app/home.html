@@ -90,10 +90,12 @@
                                         {% else %}
                                             {% if user.is_authenticated %}
                                                 <div class="d-flex mb-3">
+                                            
                                                     <a class="btn btn-primary" href="{% url "detail_page" job.slug %}">Apply Now</a>
                                                 </div>
                                             {% else %}
                                                 <div class="d-flex mb-3">
+                                                    
                                                     <a class="btn btn-primary" href="{% url "login_view" %}">Apply Now</a>
                                                 </div>
                                             {% endif %}
