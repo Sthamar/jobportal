@@ -83,9 +83,7 @@ def recommend_jobs(applicant_skills):
             if match_score > 0:
                 recommended_jobs.append((job, match_score))
                 
-    print('hello')
     
-    # Sort jobs by the match score in descending order
     recommended_jobs.sort(key=lambda x: x[1], reverse=True)
     print(recommended_jobs)
     
